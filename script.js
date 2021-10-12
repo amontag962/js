@@ -30,3 +30,4 @@ if (fullPrice >= 30000) {
 } else if (fullPrice < 0) {
   console.log("Что то пошло не так");
 }
+// new lesson
