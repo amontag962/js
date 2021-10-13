@@ -14,14 +14,14 @@ let fullPrice = screenPrice + priceOne + priceTwo;
 let servicePercentPrice = Math.ceil(fullPrice - fullPrice * (rollback / 100));
 
 // Блок описания функций
-const getRollbackMessage = function (price) {
-  if (price >= 30000) {
+const getRollbackMessage = function (fullPrice) {
+  if (fullPrice >= 30000) {
     return "Ваша скидка 10%";
-  } else if (30000 > price && price > 15000) {
+  } else if (30000 > fullPrice && fullPrice > 15000) {
     return "Ваша скидка 5%";
-  } else if (15000 >= price && price >= 0) {
+  } else if (15000 >= fullPrice && fullPrice >= 0) {
     return "Скидка не предусмотрена";
-  } else if (price < 0) {
+  } else if (fullPrice < 0) {
     return "Что то пошло не так";
   }
 };
@@ -29,14 +29,10 @@ const showTypeOf = function (variable) {
   console.log(variable, typeof variable);
 };
 const getAllServicePrices = function () {
-  const getSum = function (a, b) {
-    return a + b;
-  };
+  return priceOne + priceTwo;
 };
 function getFullPrice() {
-  function getSum(a, b) {
-    return a + b;
-  }
+  return screenPrice + allServicePrices;
 }
 function getTitle() {
   title = title.trim();
@@ -48,8 +44,8 @@ function getServicePercentPrices() {
 
 // Блок функционала
 screens = screens.toLowerCase().split(" ");
-let allServicePrices = getAllServicePrices(priceOne, priceTwo);
-fullPrice = getFullPrice(screenPrice, allServicePrices);
+let allServicePrices = getAllServicePrices();
+fullPrice = getFullPrice();
 
 getTitle();
 servicePercentPrice = getServicePercentPrices();
