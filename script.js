@@ -56,7 +56,7 @@ showTypeOf(screenPrice);
 showTypeOf(adaptive);
 
 console.log(getRollbackMessage(fullPrice));
-console.log(screens.split(" "));
+console.log(screens);
 console.log("servicePercentPrice: ", servicePercentPrice);
 
 alert("Расчет стоимости услуг готов");
