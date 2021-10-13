@@ -39,7 +39,7 @@ function getTitle() {
   title = title[0].toUpperCase() + title.substring(1).toLowerCase();
 }
 function getServicePercentPrices() {
-  Math.ceil(fullPrice - fullPrice * (rollback / 100));
+  return Math.ceil(fullPrice - fullPrice * (rollback / 100));
 }
 
 // Блок функционала
