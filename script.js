@@ -60,3 +60,5 @@ console.log(screens);
 console.log("servicePercentPrice: ", servicePercentPrice);
 
 alert("Расчет стоимости услуг готов");
+
+//
