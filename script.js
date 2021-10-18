@@ -1,31 +1,54 @@
 "use strict";
 
-// Блок объявления переменных----------------------------------------------------
+// Блок объявления переменных---------------------------------------------------------------
 
 let title;
 let screens;
 let screenPrice;
 let adaptive;
 
-let questionOne = prompt("Какой дополнительный тип услуги нужен?", "от");
-let priceOne = +prompt("Сколько это будет стоить?", "3000");
-let questionTwo = prompt("Какой дополнительный тип услуги нужен?", "вал");
-let priceTwo = +prompt("Сколько это будет стоить?", "2000");
+let questionOne;
+let priceOne;
+let questionTwo;
+let priceTwo;
 
 let rollback = 10;
 let allServicePrices;
 let fullPrice;
 let servicePercentPrice;
 
-// Блок описания функций---------------------------------------------------------
+// Блок описания функций------------------------------------------------------------
+
+const isNumber = function (num) {
+  return !isNaN(parseFloat(num)) && isFinite(num);
+};
+// Проверка на число
 
 const asking = function () {
   title = prompt("Как называется ваш проект?", "Калькулятор верстки");
-  screens = prompt("Какие типы экранов нужно разработать?", "большие");
-  screenPrice = +prompt("Сколько будет стоить данная работа?", "9000");
+  screens = prompt("Какие типы экранов нужно разработать?", "простые");
+
+  while (!isNumber(screenPrice)) {
+    screenPrice = prompt("Сколько будет стоить данная работа?");
+  }
+
   adaptive = confirm("Нужен ли адаптив на сайте");
 };
 // Задает вопросы пользователю
+
+const getAllServicePrices = function () {
+  let sum = 0;
+  for (let i = 0; i < 2; i++) {
+    if (i == 0) {
+      priceOne = prompt("Какой дополнительный тип услуги нужен?", "от");
+    } else if (i === 1) {
+      priceTwo = prompt("Какой дополнительный тип услуги нужен?", "до");
+    }
+    sum += +prompt("Сколько это будет стоить?", "3000");
+  }
+  return sum;
+};
+// Сумма дополнительных услуг
 
 const getRollbackMessage = function (fullPrice) {
   if (fullPrice >= 30000) {
@@ -40,15 +63,10 @@ const getRollbackMessage = function (fullPrice) {
 };
 // Сумма скидки
 
-const showTypeOf = function (variable) {
-  console.log(variable, typeof variable);
+const showTypeOf = function (v) {
+  console.log(v, typeof v);
 };
 // Выводит в консоль типы данных
-
-const getAllServicePrices = function () {
-  return priceOne + priceTwo;
-};
-// Сумма дополнительных услуг
 
 function getFullPrice(a, b) {
   return a + b;
@@ -57,7 +75,7 @@ function getFullPrice(a, b) {
 
 function getTitle() {
   title = title.trim();
-  title = title[0].toUpperCase() + title.substring(1).toLowerCase();
+  return (title = title[0].toUpperCase() + title.substring(1).toLowerCase());
 }
 // Функция добавления верхнего регистра для первой буквы
 
@@ -66,7 +84,7 @@ function getServicePercentPrices() {
 }
 // Получаем сумму с учетом скидки
 
-// Блок функционала--------------------------------------------------------------
+// Блок функционала---------------------------------------------------------------------
 asking();
 screens = screens.toLowerCase().split(" ");
 allServicePrices = getAllServicePrices();
@@ -79,6 +97,7 @@ showTypeOf(title);
 showTypeOf(screenPrice);
 showTypeOf(adaptive);
 
+console.log("allServicePrices: ", allServicePrices);
 console.log(getRollbackMessage(fullPrice));
 console.log(screens);
 console.log("servicePercentPrice: ", servicePercentPrice);
