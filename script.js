@@ -86,9 +86,10 @@ function getServicePercentPrices() {
 
 // Блок функционала---------------------------------------------------------------------
 asking();
+
 screens = screens.toLowerCase().split(" ");
 allServicePrices = getAllServicePrices();
-fullPrice = getFullPrice(screenPrice, allServicePrices);
+fullPrice = getFullPrice(+screenPrice, allServicePrices);
 servicePercentPrice = getServicePercentPrices();
 title = getTitle();
 
