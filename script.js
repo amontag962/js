@@ -8,10 +8,8 @@ let screenPrice;
 let adaptive;
 
 let questionOne;
-let priceOne;
+let servicePrice;
 let questionTwo;
-let priceTwo;
-
 let rollback = 10;
 let allServicePrices;
 let fullPrice;
@@ -28,8 +26,10 @@ const asking = function () {
   title = prompt("Как называется ваш проект?", "Калькулятор верстки");
   screens = prompt("Какие типы экранов нужно разработать?", "простые");
 
-  while (!isNumber(screenPrice)) {
+  do {
     screenPrice = prompt("Сколько будет стоить данная работа?");
+  } while (!isNumber(screenPrice));
+  {
   }
 
   adaptive = confirm("Нужен ли адаптив на сайте");
@@ -40,11 +40,14 @@ const getAllServicePrices = function () {
   let sum = 0;
   for (let i = 0; i < 2; i++) {
     if (i == 0) {
-      priceOne = prompt("Какой дополнительный тип услуги нужен?", "от");
+      questionOne = prompt("Какой дополнительный тип услуги нужен?", "от");
     } else if (i === 1) {
-      priceTwo = prompt("Какой дополнительный тип услуги нужен?", "до");
+      questionTwo = prompt("Какой дополнительный тип услуги нужен?", "до");
     }
-    sum += +prompt("Сколько это будет стоить?", "3000");
+    do {
+      servicePrice = prompt("Сколько это будет стоить?", "3000");
+    } while (!isNumber(servicePrice));
+    sum += parseFloat(servicePrice);
   }
   return sum;
 };
