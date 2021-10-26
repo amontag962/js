@@ -2,55 +2,69 @@
 
 // Блок объявления переменных---------------------------------------------------------------
 
-let title;
-let screens;
-let screenPrice;
-let adaptive;
+let appData = {
+  title: "",
+  screens: "",
+  screenPrice: 0,
+  adaptive: true,
 
-let questionOne;
-let servicePrice;
-let questionTwo;
-let rollback = 10;
-let allServicePrices;
-let fullPrice;
-let servicePercentPrice;
+  questionOne: "",
+  servicePrice: 0,
+  questionTwo: "",
+  rollback: 10,
+  allServicePrices: 0,
+  fullPrice: 0,
+  servicePercentPrice: 0,
+  // Переменные
 
-// Блок описания функций------------------------------------------------------------
-
-let functions = {
   isNumber: function (num) {
     return isNaN(parseFloat(num)) && isFinite(num);
   },
   // Проверка на число
+
   asking: function () {
-    title = prompt("Как называется ваш проект?", "Калькулятор верстки");
-    screens = prompt("Какие типы экранов нужно разработать?", "простые");
+    appData.title = prompt("Как называется ваш проект?", "Калькулятор верстки");
+    appData.screens = prompt(
+      "Какие типы экранов нужно разработать?",
+      "простые"
+    );
 
     do {
-      screenPrice = prompt("Сколько будет стоить данная работа?", "10000");
-    } while (functions.isNumber(screenPrice));
+      appData.screenPrice = prompt(
+        "Сколько будет стоить данная работа?",
+        "10000"
+      );
+    } while (appData.isNumber(appData.screenPrice));
     {
     }
 
-    adaptive = confirm("Нужен ли адаптив на сайте");
+    appData.adaptive = confirm("Нужен ли адаптив на сайте");
   },
   // Задает вопросы пользователю
+
   getAllServicePrices: function () {
     let sum = 0;
     for (let i = 0; i < 2; i++) {
       if (i == 0) {
-        questionOne = prompt("Какой дополнительный тип услуги нужен?", "от");
+        appData.questionOne = prompt(
+          "Какой дополнительный тип услуги нужен?",
+          "от"
+        );
       } else if (i === 1) {
-        questionTwo = prompt("Какой дополнительный тип услуги нужен?", "до");
+        appData.questionTwo = prompt(
+          "Какой дополнительный тип услуги нужен?",
+          "до"
+        );
       }
       do {
-        servicePrice = prompt("Сколько это будет стоить?", "3000");
-      } while (functions.isNumber(servicePrice));
-      sum += parseFloat(servicePrice);
+        appData.servicePrice = prompt("Сколько это будет стоить?", "3000");
+      } while (appData.isNumber(appData.servicePrice));
+      sum += parseFloat(appData.servicePrice);
     }
     return sum;
   },
   // Сумма дополнительных услуг
+
   getRollbackMessage: function (fullPrice) {
     if (fullPrice >= 30000) {
       return "Ваша скидка 10%";
@@ -66,27 +80,45 @@ let functions = {
     return a + b;
   },
   // Получаем сумму цен за экраны и доп услуг
+
   getTitle: function () {
-    title = title.trim();
-    return (title = title[0].toUpperCase() + title.substring(1).toLowerCase());
+    appData.title = appData.title.trim();
+    return (appData.title =
+      appData.title[0].toUpperCase() +
+      appData.title.substring(1).toLowerCase());
   },
   // Функция добавления верхнего регистра для первой буквы
+
   getServicePercentPrices: function () {
-    return Math.ceil(fullPrice - fullPrice * (rollback / 100));
+    return Math.ceil(
+      appData.fullPrice - appData.fullPrice * (appData.rollback / 100)
+    );
   },
   // Получаем сумму с учетом скидки
-  start: function () {
-    functions.asking();
-    screens = screens.toLowerCase().split(" ");
-    allServicePrices = functions.getAllServicePrices();
-    fullPrice = functions.getFullPrice(+screenPrice, allServicePrices);
-    servicePercentPrice = functions.getServicePercentPrices();
-    title = functions.getTitle();
-    console.log("Сумма всех доп услуг: ", allServicePrices);
-    console.log(functions.getRollbackMessage(fullPrice));
-    console.log("Стоимость верстки: ", servicePercentPrice);
+
+  logger: function () {
+    for (let key in appData) {
+      console.log("Ключ:" + key + " " + "Значение:" + appData[key]);
+    }
+    // Вывод в консоль данных
+    console.log("Сумма всех доп услуг: ", appData.allServicePrices);
+    console.log(appData.getRollbackMessage(appData.fullPrice));
+    console.log("Стоимость верстки: ", appData.servicePercentPrice);
     alert("Расчет стоимости услуг готов");
   },
+  start: function () {
+    appData.asking();
+    appData.screens = appData.screens.toLowerCase().split(" ");
+    appData.allServicePrices = appData.getAllServicePrices();
+    appData.fullPrice = appData.getFullPrice(
+      +appData.screenPrice,
+      appData.allServicePrices
+    );
+    appData.servicePercentPrice = appData.getServicePercentPrices();
+    appData.title = appData.getTitle();
+    appData.logger();
+  },
+  // функциональный блок
 };
 
-functions.start();
+appData.start();
