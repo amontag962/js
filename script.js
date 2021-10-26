@@ -18,7 +18,7 @@ let appData = {
   // Переменные
 
   isNumber: function (num) {
-    return isNaN(parseFloat(num)) && isFinite(num);
+    return !isNaN(parseFloat(num)) && isFinite(num);
   },
   // Проверка на число
 
@@ -34,9 +34,7 @@ let appData = {
         "Сколько будет стоить данная работа?",
         "10000"
       );
-    } while (appData.isNumber(appData.screenPrice));
-    {
-    }
+    } while (!appData.isNumber(appData.screenPrice));
 
     appData.adaptive = confirm("Нужен ли адаптив на сайте");
   },
@@ -58,7 +56,7 @@ let appData = {
       }
       do {
         appData.servicePrice = prompt("Сколько это будет стоить?", "3000");
-      } while (appData.isNumber(appData.servicePrice));
+      } while (!appData.isNumber(appData.servicePrice));
       sum += parseFloat(appData.servicePrice);
     }
     return sum;
