@@ -7,7 +7,6 @@ let appData = {
   screens: "",
   screenPrice: 0,
   adaptive: true,
-
   questionOne: "",
   servicePrice: 0,
   questionTwo: "",
@@ -59,7 +58,7 @@ let appData = {
       } while (!appData.isNumber(appData.servicePrice));
       sum += parseFloat(appData.servicePrice);
     }
-    return sum;
+    appData.allServicePrices = sum;
   },
   // Сумма дополнительных услуг
 
@@ -75,20 +74,19 @@ let appData = {
     }
   },
   getFullPrice: function (a, b) {
-    return a + b;
+    appData.fullPrice = a + b;
   },
   // Получаем сумму цен за экраны и доп услуг
 
   getTitle: function () {
     appData.title = appData.title.trim();
-    return (appData.title =
-      appData.title[0].toUpperCase() +
-      appData.title.substring(1).toLowerCase());
+    appData.title =
+      appData.title[0].toUpperCase() + appData.title.substring(1).toLowerCase();
   },
   // Функция добавления верхнего регистра для первой буквы
 
   getServicePercentPrices: function () {
-    return Math.ceil(
+    appData.servicePercentPrice = Math.ceil(
       appData.fullPrice - appData.fullPrice * (appData.rollback / 100)
     );
   },
@@ -107,13 +105,10 @@ let appData = {
   start: function () {
     appData.asking();
     appData.screens = appData.screens.toLowerCase().split(" ");
-    appData.allServicePrices = appData.getAllServicePrices();
-    appData.fullPrice = appData.getFullPrice(
-      +appData.screenPrice,
-      appData.allServicePrices
-    );
-    appData.servicePercentPrice = appData.getServicePercentPrices();
-    appData.title = appData.getTitle();
+    appData.getAllServicePrices();
+    appData.getFullPrice(+appData.screenPrice, appData.allServicePrices);
+    appData.getServicePercentPrices();
+    appData.getTitle();
     appData.logger();
   },
   // функциональный блок
