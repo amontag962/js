@@ -3,7 +3,7 @@
 let appData = {
   // Переменные
   title: "",
-  screens: "",
+  screens: [],
   screenPrice: 0,
   adaptive: true,
   rollback: 10,
@@ -14,7 +14,7 @@ let appData = {
   start: function () {
     // функциональный блок
     appData.asking();
-    appData.getAllServicePrices();
+    appData.addPrices();
     appData.getFullPrice();
     appData.getServicePercentPrices();
     appData.getTitle();
@@ -27,33 +27,47 @@ let appData = {
 
   // Задает вопросы пользователю
   asking: function () {
-    appData.title = prompt("Как называется ваш проект?", "Калькулятор верстки");
-
-    appData.screens = prompt(
-      "Какие типы экранов нужно разработать?",
-      "простые, сложные"
-    );
     do {
-      appData.screenPrice = prompt(
-        "Сколько будет стоить данная работа?",
-        "10000"
+      appData.title = prompt(
+        "Как называется ваш проект?",
+        "Калькулятор верстки"
       );
-    } while (!appData.isNumber(appData.screenPrice));
+    } while (appData.isNumber(appData.title));
 
-    appData.adaptive = confirm("Нужен ли адаптив на сайте");
+    for (let i = 0; i < 2; i++) {
+      let name;
+      do {
+        name = prompt("Какие типы экранов нужно разработать?", "Большие");
+      } while (appData.isNumber(name));
+
+      let price = 0;
+
+      do {
+        price = prompt("Сколько будет стоить данная работа?", "10000");
+      } while (!appData.isNumber(price));
+      appData.screens.push({ id: i, name: name, price: price });
+    }
 
     for (let i = 0; i < 2; i++) {
       let service;
       let price;
       if (i === 0) {
-        service = prompt("Какой дополнительный тип услуги нужен?", "от");
+        do {
+          service = prompt("Какой дополнительный тип услуги нужен?", "Метрика");
+        } while (appData.isNumber(service));
+
         do {
           price = prompt("Сколько это будет стоить?", "3000");
         } while (!appData.isNumber(price));
         service = i + " " + service;
         appData.services[service] = +price;
       } else if (i === 1) {
-        service = prompt("Какой дополнительный тип услуги нужен?", "до");
+        do {
+          service = prompt(
+            "Какой дополнительный тип услуги нужен?",
+            "Отправка форм"
+          );
+        } while (appData.isNumber(service));
         do {
           price = prompt("Сколько это будет стоить?", "3000");
         } while (!appData.isNumber(price));
@@ -61,10 +75,13 @@ let appData = {
         appData.services[service] = +price;
       }
     }
+    appData.adaptive = confirm("Нужен ли адаптив на сайте");
   },
-
-  // Сумма дополнительных услуг
-  getAllServicePrices: function () {
+  // Сложение усллуг внутри объектов
+  addPrices: function () {
+    appData.screenPrice = appData.screens.reduce(function (sum, item) {
+      return sum + +item.price;
+    }, 0);
     for (let key in appData.services) {
       appData.allServicePrices += appData.services[key];
     }
@@ -109,6 +126,7 @@ let appData = {
     console.log("Общая сумма ", appData.fullPrice);
     console.log("Стоимость верстки: ", appData.servicePercentPrice);
     alert("Расчет стоимости услуг готов");
+    console.log(appData.screens);
   },
 };
 
