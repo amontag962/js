@@ -132,3 +132,5 @@ let appData = {
 
 appData.start();
 console.log(appData.services);
+
+console.log(document);
